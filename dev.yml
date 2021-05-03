@@ -1,0 +1,27 @@
+name: basic 
+
+type: java
+
+up:
+  - custom:
+      name: Bloop install
+      met?: '[ -d ./.bloop/ ]'
+      meet: "sbt bloopInstall"
+  - custom:
+      name: Tap OpenJDK cask
+      met?: brew tap-info AdoptOpenJDK/openjdk | grep -v 'Not installed' >/dev/null 2>&1
+      meet: brew tap AdoptOpenJDK/openjdk
+  - homebrew:
+      - sbt
+      - adoptopenjdk11
+      - scalacenter/bloop/bloop
+  - java: "11"
+  - sbt:
+    - data
+commands:
+  bloopInstall:
+    run: sbt bloopInstall
+    desc: Force bloopInstall
+  sbt:
+    run: sbt
+    desc: Runs an sbt session
